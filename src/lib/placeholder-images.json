@@ -1,3 +1,40 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "portfolio-1",
+      "description": "E-commerce growth for a fashion brand",
+      "imageUrl": "https://picsum.photos/seed/fashionbrand/600/400",
+      "imageHint": "fashion brand"
+    },
+    {
+      "id": "portfolio-2",
+      "description": "Website redesign for a luxury car dealership",
+      "imageUrl": "https://picsum.photos/seed/cardealer/600/400",
+      "imageHint": "luxury car"
+    },
+    {
+      "id": "portfolio-3",
+      "description": "Social media campaign for a travel agency",
+      "imageUrl": "https://picsum.photos/seed/travel/600/400",
+      "imageHint": "travel destination"
+    },
+    {
+      "id": "portfolio-4",
+      "description": "Brand launch strategy for a beauty startup",
+      "imageUrl": "https://picsum.photos/seed/beauty/600/400",
+      "imageHint": "beauty product"
+    },
+    {
+      "id": "portfolio-5",
+      "description": "CRM implementation for a law firm",
+      "imageUrl": "https://picsum.photos/seed/lawfirm/600/400",
+      "imageHint": "modern office"
+    },
+    {
+      "id": "portfolio-6",
+      "description": "Content marketing for an accounting firm",
+      "imageUrl": "https://picsum.photos/seed/accounting/600/400",
+      "imageHint": "business meeting"
+    }
+  ]
 }
