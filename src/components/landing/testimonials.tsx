@@ -1,6 +1,17 @@
 
+'use client';
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+  } from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
+import * as React from "react"
 
 const testimonialsData = [
   {
@@ -27,6 +38,10 @@ const testimonialsData = [
 ];
 
 export function Testimonials() {
+  const plugin = React.useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  )
+
   return (
     <section id="testimonials" className="section-padding">
       <div className="section-container">
@@ -37,26 +52,41 @@ export function Testimonials() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {testimonialsData.map((testimonial) => (
-            <Card key={testimonial.name} className="bg-card flex flex-col">
-              <CardContent className="p-6 flex flex-col flex-grow">
-                <blockquote className="text-muted-foreground italic flex-grow">
-                  "{testimonial.quote}"
-                </blockquote>
-                <div className="mt-6 flex items-center gap-4">
-                  <Avatar>
-                    <AvatarImage src={`https://picsum.photos/seed/${testimonial.avatarSeed}/100/100`} alt={testimonial.name} data-ai-hint={testimonial.avatarHint} />
-                    <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-semibold font-headline text-foreground">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.title}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="mt-12">
+            <Carousel 
+                plugins={[plugin.current]}
+                className="w-full max-w-xs sm:max-w-xl md:max-w-2xl lg:max-w-4xl mx-auto"
+                onMouseEnter={plugin.current.stop}
+                onMouseLeave={plugin.current.reset}
+            >
+                <CarouselContent>
+                    {testimonialsData.map((testimonial, index) => (
+                    <CarouselItem key={index}>
+                        <div className="p-1">
+                        <Card className="bg-card flex flex-col h-full">
+                            <CardContent className="p-6 flex flex-col flex-grow items-center text-center">
+                                <blockquote className="text-muted-foreground italic flex-grow max-w-xl">
+                                    "{testimonial.quote}"
+                                </blockquote>
+                                <div className="mt-6 flex flex-col items-center gap-2">
+                                    <Avatar>
+                                        <AvatarImage src={`https://picsum.photos/seed/${testimonial.avatarSeed}/100/100`} alt={testimonial.name} data-ai-hint={testimonial.avatarHint} />
+                                        <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                                    </Avatar>
+                                    <div>
+                                        <p className="font-semibold font-headline text-foreground">{testimonial.name}</p>
+                                        <p className="text-sm text-muted-foreground">{testimonial.title}</p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        </div>
+                    </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious className="hidden md:inline-flex" />
+                <CarouselNext className="hidden md:inline-flex" />
+            </Carousel>
         </div>
       </div>
     </section>
