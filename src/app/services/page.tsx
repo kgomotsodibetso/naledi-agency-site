@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/landing/header';
 import { Footer } from '@/components/landing/footer';
-import { StarIcon } from '@/components/icons';
+import { StarIcon, serviceIcons } from '@/components/icons';
 import { servicesData } from '@/lib/data';
 
 const ServiceDetailSkeleton = () => (
@@ -52,12 +52,12 @@ export default function ServicesPage() {
                       Array.from({ length: 5 }).map((_, index) => <ServiceDetailSkeleton key={index} />)
                   ) : (
                       servicesData.map((service, index) => {
-                        const Icon = service.icon;
+                        const Icon = typeof service.icon === 'string' ? serviceIcons[service.icon] : service.icon;
                         return (
                           <div key={index} className="grid md:grid-cols-12 gap-8 items-start py-8 border-b border-slate-200 last:border-b-0">
                               <div className="md:col-span-4">
                                   <div className="flex items-center gap-4 sticky top-24">
-                                      <span className="text-sunrise-yellow"><Icon className="h-10 w-10 text-midnight-blue flex-shrink-0" /></span>
+                                      {Icon && <span className="text-sunrise-yellow"><Icon className="h-10 w-10 text-midnight-blue flex-shrink-0" /></span>}
                                       <h2 className="text-2xl font-sans font-bold text-midnight-blue">{service.title}</h2>
                                   </div>
                               </div>

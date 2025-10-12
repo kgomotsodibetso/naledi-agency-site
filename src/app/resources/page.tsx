@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { guidesData, auditsData } from '@/lib/data';
 import type { LeadMagnetInfo } from '@/lib/types';
 import Link from 'next/link';
+import { serviceIcons } from '@/components/icons';
 
 const NewsletterSignup = () => {
     const [email, setEmail] = React.useState('');
@@ -66,10 +67,10 @@ const NewsletterSignup = () => {
 };
 
 const LeadMagnetCard = ({ magnet }: { magnet: LeadMagnetInfo }) => {
-    const Icon = magnet.icon;
+    const Icon = typeof magnet.icon === 'string' ? serviceIcons[magnet.icon] : magnet.icon;
     return (
         <div className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col">
-            <div className="mb-4"><Icon className="h-10 w-10 text-midnight-blue" /></div>
+            {Icon && <div className="mb-4"><Icon className="h-10 w-10 text-midnight-blue" /></div>}
             <h3 className="text-xl font-sans font-bold text-midnight-blue mb-3 flex-grow">{magnet.title}</h3>
             <p className="text-slate-600 mb-6">{magnet.description}</p>
             <Link href="/contact" className="mt-auto bg-midnight-blue text-white font-bold py-3 px-6 rounded-full hover:bg-opacity-90 transition duration-300 self-start">

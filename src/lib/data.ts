@@ -3,7 +3,7 @@ import { serviceIcons, StarIcon, BookOpenIcon, ClipboardCheckIcon } from '@/comp
 
 export const servicesData: Service[] = [
   { 
-    icon: serviceIcons.social, 
+    icon: 'social', 
     title: 'Social Media Strategy & Management', 
     description: 'Your brand’s story deserves to be heard. We create tailored social media strategies that connect with your audience, grow your community, and convert followers into loyal customers.',
     whatsIncluded: [
@@ -17,7 +17,7 @@ export const servicesData: Service[] = [
     deliverables: 'Strategy deck, monthly calendar, content packs, reports.'
   },
   { 
-    icon: serviceIcons.website, 
+    icon: 'website', 
     title: 'Website Design & Vibe Coding', 
     description: 'Your website is your digital home. We design clean, professional websites that showcase your brand, drive leads, and feel alive with your identity.',
     whatsIncluded: [
@@ -32,7 +32,7 @@ export const servicesData: Service[] = [
     deliverables: 'Fully functional website, style guide, training handover.'
   },
   { 
-    icon: serviceIcons.email, 
+    icon: 'email', 
     title: 'Email Marketing & Campaigns', 
     description: 'Email is where loyalty lives. We design and execute campaigns that nurture leads, build relationships, and drive repeat business.',
     whatsIncluded: [
@@ -46,7 +46,7 @@ export const servicesData: Service[] = [
     deliverables: 'Strategy, templates, automated flows, campaign reports.'
   },
   { 
-    icon: serviceIcons.crm, 
+    icon: 'crm', 
     title: 'CRM Setup & Automation', 
     description: 'Managing customers shouldn’t be complicated. We help you set up and streamline your CRM so you can focus on growth while the tech does the heavy lifting.',
     whatsIncluded: [
@@ -60,7 +60,7 @@ export const servicesData: Service[] = [
     deliverables: 'Fully functional CRM setup, automations, training materials.'
   },
   { 
-    icon: serviceIcons.community, 
+    icon: 'community', 
     title: 'Community Building & Engagement', 
     description: 'Brands aren’t built in isolation — they grow through people. We help you build and nurture communities around your business so your audience becomes your biggest advocate.',
     whatsIncluded: [

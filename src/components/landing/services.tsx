@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { StarIcon } from '@/components/icons';
+import { StarIcon, serviceIcons } from '@/components/icons';
 import { servicesData } from '@/lib/data';
 
 const ServiceCardSkeleton = () => (
@@ -33,10 +33,10 @@ export function Services() {
                         Array.from({ length: 5 }).map((_, index) => <ServiceCardSkeleton key={index} />)
                     ) : (
                         servicesData.map((service, index) => {
-                            const Icon = service.icon;
+                            const Icon = typeof service.icon === 'string' ? serviceIcons[service.icon] : service.icon;
                             return (
                                 <div key={index} className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-                                    <div className="mb-4"><Icon className="h-8 w-8 text-midnight-blue" /></div>
+                                    {Icon && <div className="mb-4"><Icon className="h-8 w-8 text-midnight-blue" /></div>}
                                     <h3 className="text-xl font-sans font-bold text-midnight-blue mb-2">{service.title}</h3>
                                     <p className="text-slate-600">{service.description}</p>
                                 </div>

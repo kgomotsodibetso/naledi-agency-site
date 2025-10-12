@@ -19,7 +19,7 @@ export interface NavItem {
 }
 
 export interface Service {
-  icon: ComponentType<{ className?: string }>;
+  icon: string | ComponentType<{ className?: string }>;
   title: string;
   description: string;
   whatsIncluded: string[];
