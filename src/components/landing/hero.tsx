@@ -17,13 +17,13 @@ export function Hero() {
         </p>
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button asChild size="lg" className="w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg shadow-accent/20">
-            <Link href="#contact">
+            <Link href="/contact">
               Book a Strategy Call
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
-            <Link href="#services">Explore Services</Link>
+            <Link href="/services">Explore Services</Link>
           </Button>
         </div>
       </div>

@@ -11,9 +11,9 @@ import { Logo } from '@/components/logo';
 import type { NavItem } from '@/lib/types';
 
 const navItems: NavItem[] = [
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Portfolio', href: '#portfolio' },
+  { label: 'About', href: '/about' },
+  { label: 'Services', href: '/services' },
+  { label: 'Portfolio', href: '/portfolio' },
   { label: 'Persona AI', href: '/persona-generator' },
 ];
 
@@ -54,10 +54,10 @@ export function Header() {
 
         <div className="hidden md:flex items-center gap-2">
             <Button asChild variant="ghost">
-                <Link href="#contact">Submit Enquiry</Link>
+                <Link href="/contact">Submit Enquiry</Link>
             </Button>
             <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
-                <Link href="#contact">Book a Strategy Call</Link>
+                <Link href="/contact">Book a Strategy Call</Link>
             </Button>
         </div>
 
@@ -92,10 +92,10 @@ export function Header() {
               </nav>
               <div className="mt-auto flex flex-col gap-2 border-t p-4">
                 <Button asChild variant="outline" size="lg" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Link href="#contact">Submit Enquiry</Link>
+                    <Link href="/contact">Submit Enquiry</Link>
                 </Button>
                 <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Link href="#contact">Book a Strategy Call</Link>
+                    <Link href="/contact">Book a Strategy Call</Link>
                 </Button>
               </div>
             </div>

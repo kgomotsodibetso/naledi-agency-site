@@ -46,7 +46,7 @@ export function Portfolio() {
         </div>
         <div className="mt-12 text-center">
             <Button asChild size="lg" variant="outline">
-                <Link href="#contact">Discuss Your Project</Link>
+                <Link href="/contact">Discuss Your Project</Link>
             </Button>
         </div>
       </div>
