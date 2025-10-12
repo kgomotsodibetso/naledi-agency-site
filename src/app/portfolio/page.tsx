@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Header } from '@/components/landing/header';
 import { Footer } from '@/components/landing/footer';
 import Image from 'next/image';
 import { portfolioItems } from '@/lib/data';
@@ -28,7 +27,6 @@ export default function PortfolioPage() {
 
   return (
     <>
-      <Header />
       <main className="animate-fade-in-up">
         <section className="py-20 bg-slate-50">
             <div className="section-container">

@@ -1,6 +1,5 @@
 'use client';
 import React, { useState, useMemo, useEffect } from 'react';
-import { Header } from '@/components/landing/header';
 import { Footer } from '@/components/landing/footer';
 import Image from 'next/image';
 import { blogPostsData } from '@/lib/data';
@@ -44,7 +43,6 @@ export default function BlogPage() {
 
     return (
       <>
-        <Header />
         <main className="animate-fade-in-up bg-slate-50">
             <div className="section-container py-20">
                 <div className="text-center mb-16">

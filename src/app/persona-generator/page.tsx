@@ -1,4 +1,3 @@
-import { Header } from '@/components/landing/header';
 import { Footer } from '@/components/landing/footer';
 import { PersonaGeneratorClient } from './components/persona-generator-client';
 
@@ -10,7 +9,6 @@ export const metadata = {
 export default function PersonaGeneratorPage() {
   return (
     <>
-      <Header />
       <main className="flex-grow bg-slate-50">
         <section className="section-padding">
           <div className="section-container">

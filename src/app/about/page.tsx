@@ -1,4 +1,3 @@
-import { Header } from '@/components/landing/header';
 import { Footer } from '@/components/landing/footer';
 import { StarIcon } from '@/components/icons';
 import Image from 'next/image';
@@ -6,7 +5,6 @@ import Image from 'next/image';
 export default function AboutPage() {
   return (
     <>
-      <Header />
       <main className="animate-fade-in-up">
         <div className="container mx-auto px-6 py-20">
             <div className="text-center mb-16">

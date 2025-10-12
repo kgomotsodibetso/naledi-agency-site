@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { Header } from '@/components/landing/header';
 import { Footer } from '@/components/landing/footer';
 import { StarIcon, serviceIcons } from '@/components/icons';
 import { servicesData } from '@/lib/data';
@@ -35,7 +34,6 @@ export default function ServicesPage() {
   
   return (
     <>
-      <Header />
       <main className="animate-fade-in-up bg-slate-50">
           <section className="bg-midnight-blue text-white py-20 text-center">
               <div className="section-container">

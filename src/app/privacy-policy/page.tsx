@@ -1,4 +1,3 @@
-import { Header } from "@/components/landing/header"
 import { Footer } from "@/components/landing/footer"
 
 const PlaceholderContent = ({ title, lastUpdated }: { title: string; lastUpdated: string; }) => (
@@ -43,7 +42,6 @@ const PlaceholderContent = ({ title, lastUpdated }: { title: string; lastUpdated
 export default function PrivacyPolicyPage() {
     return (
         <>
-            <Header />
             <main>
                 <PlaceholderContent title="Privacy Policy" lastUpdated={new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} />
             </main>

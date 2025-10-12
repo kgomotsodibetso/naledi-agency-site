@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { DM_Sans, Nanum_Pen_Script, Inter } from 'next/font/google';
+import { Header } from '@/components/landing/header';
 import './globals.css';
 
 const fontSans = DM_Sans({
@@ -40,7 +41,12 @@ export default function RootLayout({
           fontBody.variable
         )}
       >
-        {children}
+        <div className="flex">
+          <Header />
+          <div className="flex-1 md:pl-64">
+            {children}
+          </div>
+        </div>
         <Toaster />
       </body>
     </html>
