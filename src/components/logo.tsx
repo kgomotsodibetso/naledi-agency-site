@@ -11,6 +11,7 @@ export function Logo({ className }: { className?: string }) {
         width={140}
         height={40}
         className="object-contain"
+        unoptimized
       />
     </Link>
   );
