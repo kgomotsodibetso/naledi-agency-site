@@ -11,6 +11,7 @@ export enum Page {
   PrivacyPolicy = 'privacy-policy',
   TermsOfService = 'terms-of-service',
   PersonaGenerator = 'persona-generator',
+  Search = 'search',
 }
 
 export interface NavItem {
@@ -53,7 +54,7 @@ export interface BlogPost {
 }
 
 export interface LeadMagnetInfo {
-  icon: ComponentType<{ className?: string }>;
+  icon: string | ComponentType<{ className?: string }>;
   title: string;
   description: string;
   ctaText: string;
