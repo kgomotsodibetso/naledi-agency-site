@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { DM_Sans, Nanum_Pen_Script, Inter } from 'next/font/google';
 import { Header } from '@/components/landing/header';
+import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 
 const fontSans = DM_Sans({
@@ -33,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className='light'>
+    <html lang="en" suppressHydrationWarning>
       <body 
         className={cn(
           'min-h-screen font-body antialiased',
@@ -42,9 +43,16 @@ export default function RootLayout({
           fontBody.variable
         )}
       >
-        <Header />
-        {children}
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/logo';
 import { MenuIcon, CloseIcon } from '@/components/icons';
 import { Page } from '@/lib/types';
+import { ThemeToggle } from '../theme-toggle';
 
 
 const navLinks = [
@@ -25,11 +26,12 @@ export function Header() {
 
   return (
     <>
-      <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-md">
+      <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 shadow-md">
           <div className="section-container py-4 flex justify-between items-center">
               <Logo />
-              <div>
-                <button onClick={() => setIsOpen(true)} className="text-midnight-blue">
+              <div className='flex items-center gap-4'>
+                <ThemeToggle />
+                <button onClick={() => setIsOpen(true)} className="text-foreground">
                     <MenuIcon />
                 </button>
               </div>
@@ -38,13 +40,13 @@ export function Header() {
       
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-50 bg-white transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-0 z-50 bg-background transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex justify-between items-center p-6 border-b border-slate-200">
+        <div className="flex justify-between items-center p-6 border-b">
           <Logo />
-          <button onClick={() => setIsOpen(false)} className="text-midnight-blue">
+          <button onClick={() => setIsOpen(false)} className="text-foreground">
             <CloseIcon />
           </button>
         </div>
@@ -56,13 +58,13 @@ export function Header() {
                 href={link.href}
                 onClick={() => setIsOpen(false)}
                 className={`font-semibold py-2 text-left text-xl ${
-                  pathname === link.href ? 'text-golden-ochre' : 'text-midnight-blue'
+                  pathname === link.href ? 'text-accent' : 'text-foreground'
                 }`}
               >
                 {link.name}
               </Link>
             ))}
-            <Button asChild size="lg" className="bg-midnight-blue text-white font-bold rounded-md mt-6">
+            <Button asChild size="lg" className="bg-primary text-primary-foreground font-bold rounded-md mt-6">
               <Link href="/contact" onClick={() => setIsOpen(false)}>
                 Contact Us
               </Link>
