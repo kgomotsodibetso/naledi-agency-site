@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { generatePersonasAction } from '@/app/persona-generator/actions';
 import { PersonaForm, SubmitButton } from './persona-form';
 import { PersonaResult } from './persona-result';
@@ -15,7 +15,7 @@ const initialState = {
 };
 
 export function PersonaGeneratorClient() {
-  const [state, formAction] = useFormState(generatePersonasAction, initialState);
+  const [state, formAction] = useActionState(generatePersonasAction, initialState);
 
   return (
     <Card className="max-w-4xl mx-auto bg-white shadow-2xl">
