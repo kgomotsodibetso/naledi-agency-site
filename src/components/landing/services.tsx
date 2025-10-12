@@ -1,8 +1,18 @@
+
 'use client';
 import React from 'react';
 import Link from 'next/link';
 import { StarIcon, serviceIcons } from '@/components/icons';
 import { servicesData } from '@/lib/data';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
+
 
 const ServiceCardSkeleton = () => (
     <div className="bg-white p-8 rounded-lg shadow-lg">
@@ -15,6 +25,9 @@ const ServiceCardSkeleton = () => (
 
 export function Services() {
     const [isLoading, setIsLoading] = React.useState(true);
+    const plugin = React.useRef(
+      Autoplay({ delay: 5000, stopOnInteraction: true })
+    )
 
     React.useEffect(() => {
         const timer = setTimeout(() => setIsLoading(false), 800);
@@ -28,20 +41,39 @@ export function Services() {
                     <h2 className="section-title">Our Offerings</h2>
                     <p className="section-subtitle">How we help you shine.</p>
                 </div>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div className="mb-16">
                     {isLoading ? (
-                        Array.from({ length: 5 }).map((_, index) => <ServiceCardSkeleton key={index} />)
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {Array.from({ length: 3 }).map((_, index) => <ServiceCardSkeleton key={index} />)}
+                        </div>
                     ) : (
-                        servicesData.map((service, index) => {
-                            const Icon = typeof service.icon === 'string' ? serviceIcons[service.icon] : service.icon;
-                            return (
-                                <div key={index} className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-                                    {Icon && <div className="mb-4"><Icon className="h-8 w-8 text-midnight-blue" /></div>}
-                                    <h3 className="text-xl font-sans font-bold text-midnight-blue mb-2">{service.title}</h3>
-                                    <p className="text-slate-600">{service.description}</p>
-                                </div>
-                            )
-                        })
+                         <Carousel
+                            plugins={[plugin.current]}
+                            className="w-full"
+                            onMouseEnter={plugin.current.stop}
+                            onMouseLeave={plugin.current.reset}
+                            opts={{
+                              align: "start",
+                              loop: true,
+                            }}
+                          >
+                            <CarouselContent className="-ml-4">
+                                {servicesData.map((service, index) => {
+                                    const Icon = typeof service.icon === 'string' ? serviceIcons[service.icon] : service.icon;
+                                    return (
+                                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
+                                            <div className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+                                                {Icon && <div className="mb-4"><Icon className="h-8 w-8 text-midnight-blue" /></div>}
+                                                <h3 className="text-xl font-sans font-bold text-midnight-blue mb-2 flex-grow">{service.title}</h3>
+                                                <p className="text-slate-600">{service.description}</p>
+                                            </div>
+                                        </CarouselItem>
+                                    )
+                                })}
+                            </CarouselContent>
+                             <CarouselPrevious className="hidden sm:flex" />
+                             <CarouselNext className="hidden sm:flex" />
+                        </Carousel>
                     )}
                 </div>
 
@@ -57,3 +89,4 @@ export function Services() {
         </section>
     );
 }
+
