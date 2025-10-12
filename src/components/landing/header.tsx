@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, Star, X } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -21,6 +22,7 @@ const navItems: NavItem[] = [
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const pathname = usePathname();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +48,10 @@ export function Header() {
             <Link
               key={item.label}
               href={item.href}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-foreground",
+                pathname === item.href ? "text-accent" : "text-foreground/80"
+              )}
             >
               {item.label}
             </Link>
@@ -81,7 +86,10 @@ export function Header() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="text-lg font-medium"
+                    className={cn(
+                      "text-lg font-medium",
+                      pathname === item.href ? "text-accent" : "text-foreground"
+                    )}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {item.label}
