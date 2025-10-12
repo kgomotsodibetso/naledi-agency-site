@@ -4,58 +4,26 @@
 
 @layer base {
   :root {
-    --background: 0 0% 13%; /* #222222 */
-    --foreground: 0 0% 98%; /* #fafafa */
-    --card: 224 55% 18%; /* Adjusted from primary */
-    --card-foreground: 0 0% 98%;
-    --popover: 224 55% 18%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 223 53% 22%; /* #192A56 */
-    --primary-foreground: 0 0% 98%;
-    --secondary: 223 53% 28%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 223 53% 28%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 51 100% 50%; /* #FFD700 */
-    --accent-foreground: 223 53% 15%; /* Dark navy text on gold */
+    --background: 240 10% 98%; /* slate-50 */
+    --foreground: 224 71% 15%; /* midnight-blue */
+    --card: 0 0% 100%;
+    --card-foreground: 224 71% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71% 15%;
+    --primary: 224 71% 15%; /* midnight-blue */
+    --primary-foreground: 0 0% 100%; /* white */
+    --secondary: 45 100% 64%; /* sunrise-yellow */
+    --secondary-foreground: 224 71% 15%; /* midnight-blue */
+    --muted: 220 9% 93%; /* slate-200 */
+    --muted-foreground: 225 9% 47%; /* slate-500 */
+    --accent: 34 89% 59%; /* golden-ochre */
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 223 53% 28%;
-    --input: 223 53% 28%;
-    --ring: 51 100% 55%; /* Gold for rings */
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --border: 220 13% 91%; /* slate-200 */
+    --input: 220 13% 91%;
+    --ring: 224 71% 15%;
     --radius: 0.5rem;
-  }
-  .dark {
-    /* Keeping dark theme consistent with root for this project */
-    --background: 0 0% 13%;
-    --foreground: 0 0% 98%;
-    --card: 224 55% 18%;
-    --card-foreground: 0 0% 98%;
-    --popover: 224 55% 18%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 223 53% 22%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 223 53% 28%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 223 53% 28%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 51 100% 50%;
-    --accent-foreground: 223 53% 15%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 223 53% 28%;
-    --input: 223 53% 28%;
-    --ring: 51 100% 55%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
   }
 }
 
@@ -64,7 +32,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-slate-50 text-slate-800 font-body;
   }
   html {
     @apply scroll-smooth;
@@ -73,15 +41,30 @@
 
 @layer components {
   .section-padding {
-    @apply py-20 md:py-32;
+    @apply py-20 md:py-24;
   }
   .section-container {
-    @apply container mx-auto px-4;
+    @apply container mx-auto px-6;
   }
   .section-title {
-    @apply text-3xl font-headline font-bold md:text-5xl;
+    @apply text-3xl md:text-4xl font-sans font-bold text-midnight-blue;
   }
   .section-subtitle {
-    @apply mt-4 max-w-2xl text-lg text-muted-foreground;
+    @apply font-handwriting text-golden-ochre text-3xl;
   }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
 }

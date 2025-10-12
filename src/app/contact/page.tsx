@@ -6,7 +6,7 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <main className="flex-grow">
+      <main className="animate-fade-in-up">
         <ContactSection />
       </main>
       <Footer />

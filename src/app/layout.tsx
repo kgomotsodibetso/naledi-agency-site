@@ -1,11 +1,28 @@
 import type { Metadata } from 'next';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
+import { DM_Sans, Nanum_Pen_Script, Inter } from 'next/font/google';
 import './globals.css';
 
+const fontSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
+
+const fontBody = Inter({
+  subsets: ['latin'],
+  variable: '--font-body',
+});
+
+const fontHandwriting = Nanum_Pen_Script({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-handwriting',
+});
+
 export const metadata: Metadata = {
-  title: 'Naledi Digital - Premium Digital Marketing',
-  description: 'African excellence meets global digital sophistication. We transform brands into digital empires.',
+  title: 'Naledi Digital - The Home of Brand Builders',
+  description: 'We help small businesses, entrepreneurs, and startups build unforgettable brands that shine bright.',
 };
 
 export default function RootLayout({
@@ -14,14 +31,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
-      </head>
-      <body className={cn('font-body antialiased min-h-screen bg-background flex flex-col')}>
+    <html lang="en" className='light'>
+      <body 
+        className={cn(
+          'min-h-screen font-body antialiased',
+          fontSans.variable,
+          fontHandwriting.variable,
+          fontBody.variable
+        )}
+      >
         {children}
         <Toaster />
       </body>

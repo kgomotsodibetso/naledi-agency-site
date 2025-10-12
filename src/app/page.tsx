@@ -6,20 +6,22 @@ import { Testimonials } from '@/components/landing/testimonials';
 import { FutureProducts } from '@/components/landing/future-products';
 import { Contact } from '@/components/landing/contact';
 import { Footer } from '@/components/landing/footer';
+import { BlogSection } from '@/components/landing/blog-section';
 
 export default function Home() {
   return (
-    <>
+    <div className="animate-fade-in-up">
       <Header />
-      <main className="flex-grow">
+      <main>
         <Hero />
         <Services />
         <Portfolio />
         <Testimonials />
-        <FutureProducts />
+        <BlogSection />
         <Contact />
+        <FutureProducts />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

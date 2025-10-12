@@ -1,55 +1,62 @@
-import Image from 'next/image';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Button } from '@/components/ui/button';
+'use client';
+import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { portfolioItems } from '@/lib/data';
 
-const portfolioItems = PlaceHolderImages.map(img => ({
-    id: img.id,
-    title: img.description.split(' for ')[0],
-    category: img.description.split(' for ')[1],
-    imageUrl: img.imageUrl,
-    imageHint: img.imageHint
-}));
+const ContentCardSkeleton = () => (
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="w-full h-56 bg-slate-200 animate-pulse"></div>
+        <div className="p-6">
+            <div className="h-4 w-1/3 bg-slate-200 rounded mb-3 animate-pulse"></div>
+            <div className="h-8 w-1/2 bg-slate-200 rounded mb-4 animate-pulse"></div>
+            <div className="h-4 w-full bg-slate-200 rounded animate-pulse"></div>
+            <div className="h-4 w-5/6 bg-slate-200 rounded mt-1 animate-pulse"></div>
+        </div>
+    </div>
+);
+
 
 export function Portfolio() {
-  return (
-    <section id="portfolio" className="section-padding bg-card">
-      <div className="section-container">
-        <div className="text-center">
-          <h2 className="section-title">Stellar Results, Proven Success</h2>
-          <p className="section-subtitle mx-auto">
-            While we prepare our detailed case studies, here's a glimpse of the industries we transform and the results we drive.
-          </p>
-        </div>
+  const [isLoading, setIsLoading] = React.useState(true);
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {portfolioItems.slice(0, 6).map((item) => (
-            <Card key={item.id} className="group overflow-hidden bg-background/50 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 transform hover:-translate-y-1">
-              <CardHeader className="p-0">
-                <div className="relative aspect-[3/2] w-full overflow-hidden">
-                  <Image
-                    src={item.imageUrl}
-                    alt={item.title}
-                    fill
-                    data-ai-hint={item.imageHint}
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className="p-6">
-                <p className="text-sm font-semibold text-accent">{item.category}</p>
-                <h3 className="mt-2 text-xl font-headline font-bold">{item.title}</h3>
-              </CardContent>
-            </Card>
-          ))}
+  React.useEffect(() => {
+      const timer = setTimeout(() => setIsLoading(false), 800);
+      return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <section id="portfolio" className="py-20 bg-slate-50">
+        <div className="section-container">
+            <div className="text-center mb-12">
+                <h2 className="section-title">Our Work in the Wild</h2>
+                <p className="section-subtitle">Proof is in the portfolio.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {isLoading ? (
+                    Array.from({ length: 3 }).map((_, index) => <ContentCardSkeleton key={index} />)
+                ) : (
+                    portfolioItems.slice(0, 3).map((study) => (
+                        <div key={study.id} className="bg-white rounded-lg shadow-lg overflow-hidden group">
+                            <div className="relative">
+                                <Image src={study.imageUrl} alt={study.client} width={800} height={600} className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
+                                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                            </div>
+                            <div className="p-6">
+                                <p className="text-sm font-bold text-golden-ochre">{study.services}</p>
+                                <h3 className="text-2xl font-sans font-bold text-midnight-blue mt-1 mb-3">{study.client}</h3>
+                                <p className="text-slate-600 font-body">{study.description}</p>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
+            <div className="text-center mt-12">
+                <Link href="/portfolio" className="bg-midnight-blue text-white font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition duration-300">
+                    View All Projects
+                </Link>
+            </div>
         </div>
-        <div className="mt-12 text-center">
-            <Button asChild size="lg" variant="outline">
-                <Link href="/contact">Discuss Your Project</Link>
-            </Button>
-        </div>
-      </div>
     </section>
   );
 }

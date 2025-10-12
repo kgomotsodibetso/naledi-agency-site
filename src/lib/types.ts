@@ -1,22 +1,60 @@
-import type { LucideIcon } from "lucide-react";
+import type { ReactElement, ComponentType } from 'react';
 
-export type NavItem = {
+export enum Page {
+  Home = 'home',
+  About = 'about',
+  Services = 'services',
+  Portfolio = 'portfolio',
+  Blog = 'blog',
+  Contact = 'contact',
+  Resources = 'resources',
+  PrivacyPolicy = 'privacy-policy',
+  TermsOfService = 'terms-of-service',
+  PersonaGenerator = 'persona-generator',
+}
+
+export interface NavItem {
   label: string;
-  href: string;
-};
+  href: Page;
+}
 
-export type Service = {
-  icon: LucideIcon;
+export interface Service {
+  icon: ComponentType<{ className?: string }>;
   title: string;
   description: string;
-  benefits: string[];
-  process: string;
-};
+  whatsIncluded: string[];
+  whoItsFor: string;
+  deliverables: string;
+}
 
-export type PortfolioItem = {
+export interface PortfolioItem {
+  id: string;
+  client: string;
+  title: string;
+  services: string;
+  imageUrl: string;
+  description: string;
+}
+
+export interface Testimonial {
+  quote: string;
+  author: string;
+  company: string;
+}
+
+export interface BlogPost {
   id: string;
   title: string;
-  category: string;
+  excerpt: string;
   imageUrl: string;
-  imageHint: string;
-};
+  author: string;
+  date: string;
+  category: string;
+}
+
+export interface LeadMagnetInfo {
+  icon: ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+  ctaText: string;
+}

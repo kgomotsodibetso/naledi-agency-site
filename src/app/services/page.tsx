@@ -1,118 +1,128 @@
+'use client';
+import React from 'react';
+import Link from 'next/link';
 import { Header } from '@/components/landing/header';
 import { Footer } from '@/components/landing/footer';
-import type { Service } from '@/lib/types';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { UsersRound, CodeXml, MailCheck, Database, FilePenLine, HeartHandshake, Briefcase, CheckCircle2 } from 'lucide-react';
+import { StarIcon } from '@/components/icons';
+import { servicesData } from '@/lib/data';
 
-const services: Service[] = [
-  {
-    icon: UsersRound,
-    title: 'Social Media Strategy & Management',
-    description: 'Cultivate a thriving online community and turn followers into loyal advocates.',
-    benefits: ['Increased Brand Awareness', 'Higher Follower Engagement', 'Lead Generation', 'Community Building'],
-    process: 'We start with a deep-dive audit, develop a content strategy, manage your platforms, and report on key metrics for continuous growth.'
-  },
-  {
-    icon: CodeXml,
-    title: 'Website Building / Vibe Coding',
-    description: 'Your website is your digital flagship store. We build high-performance, visually stunning sites that convert.',
-    benefits: ['Bespoke, On-Brand Design', 'Mobile-First & Responsive', 'Optimized for Speed', 'Scalable & Secure'],
-    process: 'Our process involves strategy, UI/UX design, development ("Vibe Coding"), rigorous testing, and a seamless launch.'
-  },
-  {
-    icon: MailCheck,
-    title: 'Email Marketing & Automation',
-    description: 'Nurture leads and drive sales directly in your customers\' inboxes with powerful, automated email campaigns.',
-    benefits: ['High ROI', 'Personalized Communication', 'Lead Nurturing', 'Increased Customer Retention'],
-    process: 'We set up your email platform, design templates, write compelling copy, build automation flows, and analyze performance.'
-  },
-  {
-    icon: Database,
-    title: 'CRM Setup & Administration',
-    description: 'Centralize your customer data and streamline your sales process with a perfectly configured CRM.',
-    benefits: ['Improved Customer Relationships', 'Streamlined Sales Pipeline', 'Data-Driven Decision Making', 'Enhanced Team Productivity'],
-    process: 'We help you select the right CRM, customize it to your needs, migrate your data, and train your team for success.'
-  },
-  {
-    icon: FilePenLine,
-    title: 'Copywriting',
-    description: 'Words that sell. We craft persuasive copy for sales pages, ads, emails, and social media that drives action.',
-    benefits: ['Higher Conversion Rates', 'Clear Brand Messaging', 'Engaging Content', 'Stronger Calls-to-Action'],
-    process: 'We begin by understanding your voice and audience, then write, edit, and refine copy that aligns perfectly with your campaign goals.'
-  },
-  {
-    icon: HeartHandshake,
-    title: 'Community & Loyalty Strategy',
-    description: 'Build a fortress of loyal customers who not only buy but also evangelize for your brand.',
-    benefits: ['Increased Customer Lifetime Value', 'Reduced Churn', 'Authentic User-Generated Content', 'Brand Advocacy'],
-    process: 'We design and implement loyalty programs, community platforms, and engagement strategies that foster a sense of belonging.'
-  },
-  {
-    icon: Briefcase,
-    title: 'Consulting & Retainers',
-    description: 'Get expert, ongoing strategic guidance to navigate the digital landscape and stay ahead of the curve.',
-    benefits: ['Access to Senior Expertise', 'Proactive Strategy & Advice', 'Flexible Support', 'Long-Term Growth Partner'],
-    process: 'Our retainers provide you with a dedicated marketing partner for ongoing strategy sessions, campaign oversight, and priority support.'
-  }
-];
+const ServiceDetailSkeleton = () => (
+    <div className="grid md:grid-cols-12 gap-8 items-start py-8 border-b border-slate-200 last:border-b-0 opacity-75">
+        <div className="md:col-span-4">
+            <div className="flex items-center gap-4 sticky top-24">
+                 <div className="h-10 w-10 bg-slate-200 rounded-md animate-pulse flex-shrink-0"></div>
+                 <div className="h-8 w-3/4 bg-slate-200 rounded animate-pulse"></div>
+            </div>
+        </div>
+        <div className="md:col-span-8 space-y-6">
+            <div className="h-5 w-full bg-slate-200 rounded animate-pulse"></div>
+            <div className="h-5 w-5/6 bg-slate-200 rounded animate-pulse"></div>
+            <div className="h-4 w-1/4 bg-slate-200 rounded mt-4 animate-pulse"></div>
+            <div className="h-4 w-full bg-slate-200 rounded mt-2 animate-pulse"></div>
+            <div className="h-4 w-full bg-slate-200 rounded animate-pulse"></div>
+            <div className="h-4 w-1/2 bg-slate-200 rounded animate-pulse"></div>
+        </div>
+    </div>
+);
 
 export default function ServicesPage() {
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+      const timer = setTimeout(() => setIsLoading(false), 800);
+      return () => clearTimeout(timer);
+  }, []);
+  
   return (
     <>
       <Header />
-      <main className="flex-grow">
-        <section id="services" className="section-padding">
-          <div className="section-container">
-            <div className="text-center">
-              <h2 className="section-title">Our Arsenal of Expertise</h2>
-              <p className="section-subtitle mx-auto">
-                A comprehensive suite of digital marketing services designed to elevate your brand at every touchpoint.
-              </p>
-            </div>
+      <main className="animate-fade-in-up bg-slate-50">
+          <section className="bg-midnight-blue text-white py-20 text-center">
+              <div className="section-container">
+                  <h1 className="text-4xl md:text-6xl font-sans font-extrabold">Build. Grow. Thrive.</h1>
+                  <p className="max-w-3xl mx-auto text-lg md:text-xl font-body mt-4 opacity-90">
+                      At Naledi Digital, we don’t just offer marketing services — we build brands from the ground up. Whether you’re starting fresh or scaling big, our services are designed to take you from spark to star.
+                  </p>
+              </div>
+          </section>
 
-            <div className="mt-12 max-w-4xl mx-auto">
-              <Accordion type="single" collapsible className="w-full">
-                {services.map((service, index) => (
-                  <AccordionItem key={index} value={`item-${index}`} className="border-b-border/50">
-                    <AccordionTrigger className="text-left hover:no-underline group">
-                        <div className="flex items-center gap-4">
-                            <service.icon className="h-8 w-8 text-accent flex-shrink-0" />
-                            <div>
-                                <h3 className="font-headline text-lg group-hover:text-accent transition-colors">{service.title}</h3>
-                                <p className="text-sm text-muted-foreground">{service.description}</p>
-                            </div>
-                        </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="pl-16">
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <h4 className="font-semibold text-foreground mb-2">Key Benefits:</h4>
-                                <ul className="space-y-1.5">
-                                    {service.benefits.map((benefit, i) => (
-                                        <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                                            <CheckCircle2 className="h-4 w-4 text-accent/80 flex-shrink-0" />
-                                            <span>{benefit}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 className="font-semibold text-foreground mb-2">Our Process:</h4>
-                                <p className="text-sm text-muted-foreground">{service.process}</p>
-                            </div>
-                        </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
+          <section className="py-20">
+              <div className="section-container space-y-16">
+                  {isLoading ? (
+                      Array.from({ length: 5 }).map((_, index) => <ServiceDetailSkeleton key={index} />)
+                  ) : (
+                      servicesData.map((service, index) => {
+                        const Icon = service.icon;
+                        return (
+                          <div key={index} className="grid md:grid-cols-12 gap-8 items-start py-8 border-b border-slate-200 last:border-b-0">
+                              <div className="md:col-span-4">
+                                  <div className="flex items-center gap-4 sticky top-24">
+                                      <span className="text-sunrise-yellow"><Icon className="h-10 w-10 text-midnight-blue flex-shrink-0" /></span>
+                                      <h2 className="text-2xl font-sans font-bold text-midnight-blue">{service.title}</h2>
+                                  </div>
+                              </div>
+                              <div className="md:col-span-8 space-y-6">
+                                  <p className="text-lg text-slate-700 font-light">{service.description}</p>
+                                  <div>
+                                      <h3 className="font-bold text-midnight-blue mb-2 text-lg">What’s included:</h3>
+                                      <ul className="list-disc list-inside space-y-1 text-slate-600 columns-1 sm:columns-2">
+                                          {service.whatsIncluded.map(item => <li key={item}>{item}</li>)}
+                                      </ul>
+                                  </div>
+                                  <div className="grid sm:grid-cols-2 gap-6 pt-4">
+                                      <div>
+                                          <h3 className="font-bold text-midnight-blue mb-2 text-lg">Who it’s for:</h3>
+                                          <p className="text-slate-600">{service.whoItsFor}</p>
+                                      </div>
+                                      <div>
+                                          <h3 className="font-bold text-midnight-blue mb-2 text-lg">Deliverables:</h3>
+                                          <p className="text-slate-600">{service.deliverables}</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                        )
+                      })
+                  )}
+              </div>
+          </section>
+          
+          <section className="py-20 bg-white">
+            <div className="section-container text-center">
+              <div className="max-w-4xl mx-auto bg-midnight-blue text-white p-10 rounded-lg shadow-2xl">
+                <StarIcon className="w-12 h-12 text-sunrise-yellow mx-auto mb-4" />
+                <h2 className="text-4xl font-sans font-bold mb-4">Startup Growth Kit (Signature Package)</h2>
+                <p className="text-lg opacity-90 mb-6">For entrepreneurs starting from zero — this kit bundles everything you need to launch and grow with confidence.</p>
+                <div className="text-left inline-block mx-auto space-y-2 mb-8 text-lg">
+                    <p><strong className="text-sunrise-yellow font-sans mr-2">✓</strong> Brand positioning workshop</p>
+                    <p><strong className="text-sunrise-yellow font-sans mr-2">✓</strong> Starter website (up to 3 pages)</p>
+                    <p><strong className="text-sunrise-yellow font-sans mr-2">✓</strong> Social media setup & 1-month content plan</p>
+                    <p><strong className="text-sunrise-yellow font-sans mr-2">✓</strong> Email marketing setup (newsletter template + welcome sequence)</p>
+                    <p><strong className="text-sunrise-yellow font-sans mr-2">✓</strong> CRM basics for tracking leads & clients</p>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-6 pt-6 border-t border-white/20">
+                    <div>
+                        <h3 className="font-bold text-sunrise-yellow mb-2 text-lg">Who it’s for:</h3>
+                        <p>New businesses ready to go from idea to launch with a full toolkit.</p>
+                    </div>
+                    <div>
+                        <h3 className="font-bold text-sunrise-yellow mb-2 text-lg">Deliverables:</h3>
+                        <p>Launch-ready digital presence + growth roadmap.</p>
+                    </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+
+          <section className="py-20 text-center bg-slate-50">
+              <div className="section-container">
+                  <h2 className="text-4xl font-sans font-bold text-midnight-blue">Every big brand starts small.</h2>
+                  <h3 className="font-handwriting text-golden-ochre text-4xl mt-2 mb-8">Let’s build yours together.</h3>
+                  <Link href="/contact" className="bg-sunrise-yellow text-midnight-blue font-bold py-4 px-10 rounded-full hover:bg-golden-ochre transition duration-300 transform hover:scale-105 text-lg shadow-lg">
+                      Get Started
+                  </Link>
+              </div>
+          </section>
       </main>
       <Footer />
     </>

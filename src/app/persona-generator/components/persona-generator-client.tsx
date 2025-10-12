@@ -18,12 +18,12 @@ export function PersonaGeneratorClient() {
   const [state, formAction] = useFormState(generatePersonasAction, initialState);
 
   return (
-    <Card className="max-w-4xl mx-auto bg-card">
+    <Card className="max-w-4xl mx-auto bg-white shadow-2xl">
       <CardContent className="p-6 md:p-8">
         <form action={formAction}>
           <div className="space-y-6">
             <PersonaForm />
-            <div>
+            <div className='pt-2'>
               <SubmitButton />
             </div>
           </div>
