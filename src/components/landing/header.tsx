@@ -15,6 +15,7 @@ const navItems: NavItem[] = [
   { label: 'Services', href: '/services' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Persona AI', href: '/persona-generator' },
+  { label: 'Blog', href: '/blog' },
 ];
 
 export function Header() {
@@ -53,9 +54,6 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
-            <Button asChild variant="ghost">
-                <Link href="/contact">Submit Enquiry</Link>
-            </Button>
             <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
                 <Link href="/contact">Book a Strategy Call</Link>
             </Button>
@@ -91,9 +89,6 @@ export function Header() {
                 ))}
               </nav>
               <div className="mt-auto flex flex-col gap-2 border-t p-4">
-                <Button asChild variant="outline" size="lg" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Link href="/contact">Submit Enquiry</Link>
-                </Button>
                 <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => setIsMobileMenuOpen(false)}>
                     <Link href="/contact">Book a Strategy Call</Link>
                 </Button>
