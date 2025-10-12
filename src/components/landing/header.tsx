@@ -4,25 +4,13 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, ChevronDown, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Logo } from '@/components/logo';
 import type { NavItem } from '@/lib/types';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 
 const navItems: NavItem[] = [
   { label: 'About', href: '/about' },
@@ -70,21 +58,11 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <NavLink href="/">Home</NavLink>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="flex items-center gap-1 text-sm font-medium text-foreground/80 hover:text-foreground px-0">
-                Pages <ChevronDown className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {navItems.map((item) => (
-                <DropdownMenuItem key={item.label} asChild>
-                  <Link href={item.href} className={cn(pathname === item.href && "text-accent")}>{item.label}</Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {navItems.map((item) => (
+            <NavLink key={item.label} href={item.href}>
+              {item.label}
+            </NavLink>
+          ))}
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
@@ -110,41 +88,20 @@ export function Header() {
                   <span className="sr-only">Close menu</span>
                 </Button>
               </div>
-              <nav className="flex flex-col p-4">
-                <Link
-                  href="/"
-                  className={cn(
-                    "text-lg font-medium py-2",
-                    pathname === "/" ? "text-accent" : "text-foreground"
-                  )}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Home
-                </Link>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="pages" className="border-none">
-                    <AccordionTrigger className="py-2 text-lg font-medium text-foreground hover:no-underline">
-                      Pages
-                    </AccordionTrigger>
-                    <AccordionContent className="pl-4">
-                      <div className="flex flex-col gap-4">
-                        {navItems.map((item) => (
-                          <Link
-                            key={item.label}
-                            href={item.href}
-                            className={cn(
-                              "text-lg font-medium",
-                              pathname === item.href ? "text-accent" : "text-foreground"
-                            )}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            {item.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+              <nav className="flex flex-col gap-4 p-4">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className={cn(
+                      "text-lg font-medium",
+                      pathname === item.href ? "text-accent" : "text-foreground"
+                    )}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </nav>
               <div className="mt-auto flex flex-col gap-2 border-t p-4">
                 <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => setIsMobileMenuOpen(false)}>
@@ -158,4 +115,3 @@ export function Header() {
     </header>
   );
 }
-
