@@ -29,7 +29,7 @@ export function Hero() {
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button asChild size="lg" className="w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg shadow-accent/20">
             <Link href="/contact">
-              Book a Strategy Call
+              Get in Touch
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
