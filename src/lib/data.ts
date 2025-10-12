@@ -1,3 +1,4 @@
+
 import type { Service, PortfolioItem, Testimonial, BlogPost, LeadMagnetInfo } from './types';
 import { serviceIcons, StarIcon, BookOpenIcon, ClipboardCheckIcon } from '@/components/icons';
 
@@ -83,7 +84,7 @@ export const portfolioItems: PortfolioItem[] = [
 
 export const testimonialsData: Testimonial[] = [
     { quote: "Naledi Digital transformed our online presence. Their strategic approach to social media was a game-changer for us.", author: "Neno Ferreira", company: "Artist & Creator" },
-    { quote: "The website they built is not just beautiful, it\'s a true reflection of our brand\'s vibe. We\'ve seen a huge uptick in inquiries.", author: "T. Mokoena", company: "Tshiamiso Astronauts" },
+    { quote: "The website they built is not just beautiful, it's a true reflection of our brand's vibe. We've seen a huge uptick in inquiries.", author: "T. Mokoena", company: "Tshiamiso Astronauts" },
     { quote: "Working with them was a dream. They understood our vision and executed it flawlessly, helping us grow from an idea to a real business.", author: "J. Doe", company: "Startup Founder" }
 ];
 
@@ -119,19 +120,19 @@ export const blogPostsData: BlogPost[] = [
 
 export const guidesData: LeadMagnetInfo[] = [
   {
-    icon: StarIcon,
+    icon: 'StarIcon',
     title: 'From Spark to Star: 5 Steps to Build a Brand That Grows',
     description: 'Our foundational guide to building a memorable brand. Learn how to define your mission, identify your audience, and create a visual identity that stands out.',
     ctaText: 'Download the Guide'
   },
   {
-    icon: BookOpenIcon,
+    icon: 'BookOpenIcon',
     title: 'The Startup Social Media Playbook',
     description: 'Struggling with social? This playbook provides actionable tips on how to post, engage, and convert followers into customers on any platform.',
     ctaText: 'Get the Playbook'
   },
   {
-    icon: serviceIcons.crm,
+    icon: 'crm',
     title: 'CRM Made Simple: How to Organize Your Leads',
     description: 'Move beyond spreadsheets. This guide breaks down the basics of CRM and helps you choose and set up a system to manage your leads without the overwhelm.',
     ctaText: 'Simplify Your CRM'
@@ -140,19 +141,19 @@ export const guidesData: LeadMagnetInfo[] = [
 
 export const auditsData: LeadMagnetInfo[] = [
   {
-    icon: ClipboardCheckIcon,
+    icon: 'ClipboardCheckIcon',
     title: 'Free Social Media Audit',
     description: 'Get a professional review of one of your social media profiles. We\'ll provide actionable recommendations to improve your content, engagement, and growth.',
     ctaText: 'Request Your Audit'
   },
   {
-    icon: serviceIcons.website,
+    icon: 'website',
     title: 'Free Website Mini-Audit',
     description: 'Is your website converting? We\'ll review your homepage for clarity, mobile-friendliness, and usability, giving you quick wins to improve your online presence.',
     ctaText: 'Audit My Website'
   },
   {
-    icon: StarIcon,
+    icon: 'StarIcon',
     title: 'Marketing Health Check Quiz',
     description: 'Take our interactive quiz to get a personalized report on your marketing health and discover your biggest opportunities for growth.',
     ctaText: 'Take the Quiz'
