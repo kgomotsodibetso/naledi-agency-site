@@ -1,13 +1,24 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 export function Hero() {
   return (
-    <section className="relative section-padding bg-background">
-       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/30 to-background to-70% opacity-50"></div>
-      <div className="section-container text-center relative z-10">
-        <h1 className="text-4xl font-headline font-bold tracking-tighter md:text-7xl">
+    <section className="relative h-[80vh] min-h-[500px] md:h-[calc(100vh-80px)] flex items-center justify-center text-center section-padding">
+      <div className="absolute inset-0 z-0">
+          <Image 
+              src="https://picsum.photos/seed/hero/1920/1080"
+              alt="Digital marketing agency"
+              fill
+              data-ai-hint="abstract digital background"
+              className="object-cover"
+              priority
+          />
+          <div className="absolute inset-0 bg-background/60 backdrop-brightness-75"></div>
+      </div>
+      <div className="section-container relative z-10">
+        <h1 className="text-4xl font-headline font-bold tracking-tighter md:text-7xl text-foreground">
           African Excellence. Global Reach.
           <br />
           <span className="text-accent">Digital Mastery.</span>
@@ -22,7 +33,7 @@ export function Hero() {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+          <Button asChild size="lg" variant="outline" className="w-full sm:w-auto border-foreground/50 text-foreground hover:bg-foreground hover:text-background">
             <Link href="/services">Explore Services</Link>
           </Button>
         </div>
