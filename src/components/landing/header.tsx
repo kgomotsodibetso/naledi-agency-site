@@ -28,21 +28,7 @@ export function Header() {
       <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-md">
           <div className="section-container py-4 flex justify-between items-center">
               <Logo />
-              <nav className="hidden md:flex items-center gap-6">
-                  {navLinks.map(link => (
-                      <Link
-                          key={link.name}
-                          href={link.href}
-                          className={`font-semibold transition duration-300 ${pathname === link.href ? 'text-golden-ochre' : 'text-midnight-blue hover:text-golden-ochre'}`}
-                      >
-                          {link.name}
-                      </Link>
-                  ))}
-                  <Button asChild className="bg-midnight-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-opacity-90 transition duration-300">
-                    <Link href="/contact">Contact Us</Link>
-                  </Button>
-              </nav>
-              <div className="md:hidden">
+              <div>
                 <button onClick={() => setIsOpen(true)} className="text-midnight-blue">
                     <MenuIcon />
                 </button>
@@ -52,7 +38,7 @@ export function Header() {
       
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-50 bg-white transform transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed inset-0 z-50 bg-white transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
