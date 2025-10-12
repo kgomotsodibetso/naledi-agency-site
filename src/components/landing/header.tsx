@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/logo';
-import { MenuIcon, CloseIcon, SearchIcon } from '@/components/icons';
+import { MenuIcon, CloseIcon } from '@/components/icons';
 import { Page } from '@/lib/types';
 
 
@@ -21,20 +21,7 @@ const navLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [localQuery, setLocalQuery] = React.useState('');
   const pathname = usePathname();
-
-  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      if (localQuery.trim()) {
-          // Implement search functionality or navigation
-          console.log("Search query:", localQuery);
-          // Assuming navigation to a search page:
-          // router.push(`/search?q=${localQuery}`);
-          setLocalQuery('');
-          setIsOpen(false);
-      }
-  };
 
   return (
     <>
@@ -51,19 +38,6 @@ export function Header() {
                           {link.name}
                       </Link>
                   ))}
-                  <form onSubmit={handleSearchSubmit} className="relative">
-                      <input
-                          type="search"
-                          value={localQuery}
-                          onChange={(e) => setLocalQuery(e.target.value)}
-                          placeholder="Search..."
-                          aria-label="Search site"
-                          className="px-4 py-2 w-32 text-sm rounded-full border-2 bg-slate-100 text-slate-900 placeholder:text-slate-500 border-slate-300 focus:w-48 focus:border-midnight-blue focus:ring-0 transition-all duration-300"
-                      />
-                      <button type="submit" aria-label="Submit search" className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-midnight-blue">
-                          <SearchIcon />
-                      </button>
-                  </form>
                   <Button asChild className="bg-midnight-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-opacity-90 transition duration-300">
                     <Link href="/contact">Contact Us</Link>
                   </Button>
@@ -89,19 +63,6 @@ export function Header() {
           </button>
         </div>
         <div className="p-6">
-          <form onSubmit={handleSearchSubmit} className="relative mb-6">
-            <input
-              type="search"
-              value={localQuery}
-              onChange={(e) => setLocalQuery(e.target.value)}
-              placeholder="Search..."
-              aria-label="Search site"
-              className="w-full px-4 py-3 rounded-md border-2 bg-slate-100 text-slate-900 placeholder:text-slate-500 border-slate-300 text-lg focus:border-midnight-blue focus:ring-0"
-            />
-            <button type="submit" aria-label="Submit search" className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500">
-              <SearchIcon className="h-6 w-6" />
-            </button>
-          </form>
           <nav className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <Link
