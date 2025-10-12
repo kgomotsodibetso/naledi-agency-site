@@ -38,53 +38,37 @@ export function Header() {
   };
 
   return (
-    <>
-      {/* Vertical Desktop Navbar */}
-      <aside className="hidden md:flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto border-r bg-white fixed">
-        <div className="px-4">
+    <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-md">
+        <div className="section-container py-4 flex justify-between items-center">
             <Logo />
-        </div>
-
-        <div className="flex flex-col justify-between flex-1 mt-6">
-            <nav className="flex-1 -mx-3 space-y-3">
-                <div className="relative mx-3 my-4">
-                    <form onSubmit={handleSearchSubmit}>
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                            <SearchIcon />
-                        </span>
-
-                        <input 
-                            type="search"
-                            value={localQuery}
-                            onChange={(e) => setLocalQuery(e.target.value)}
-                            className="w-full py-2 pl-10 pr-4 text-slate-700 bg-slate-100 border rounded-md focus:border-midnight-blue focus:ring-midnight-blue focus:ring focus:ring-opacity-40" 
-                            placeholder="Search" 
-                        />
-                    </form>
-                </div>
+            <nav className="hidden md:flex items-center gap-6">
                 {navLinks.map(link => (
                     <Link
                         key={link.name}
                         href={link.href}
-                        className={`flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform ${pathname === link.href ? 'bg-midnight-blue text-white' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-800'}`}
+                        className={`font-semibold transition duration-300 ${pathname === link.href ? 'text-golden-ochre' : 'text-midnight-blue hover:text-golden-ochre'}`}
                     >
-                        <span className="mx-2 text-sm font-medium">{link.name}</span>
+                        {link.name}
                     </Link>
                 ))}
-            </nav>
-            
-            <div className="mt-6">
-                <Button asChild className="w-full bg-midnight-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-opacity-90 transition duration-300">
+                <form onSubmit={handleSearchSubmit} className="relative">
+                    <input
+                        type="search"
+                        value={localQuery}
+                        onChange={(e) => setLocalQuery(e.target.value)}
+                        placeholder="Search..."
+                        aria-label="Search site"
+                        className="px-4 py-2 w-32 text-sm rounded-full border-2 bg-slate-100 text-slate-900 placeholder:text-slate-500 border-slate-300 focus:w-48 focus:border-midnight-blue focus:ring-0 transition-all duration-300"
+                    />
+                    <button type="submit" aria-label="Submit search" className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-midnight-blue">
+                        <SearchIcon />
+                    </button>
+                </form>
+                <Button asChild className="bg-midnight-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-opacity-90 transition duration-300">
                   <Link href="/contact">Contact Us</Link>
                 </Button>
-            </div>
-        </div>
-      </aside>
-
-      {/* Mobile Header */}
-      <header className="md:hidden bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-md w-full">
-          <div className="section-container py-4 flex justify-between items-center">
-              <Logo />
+            </nav>
+            <div className="md:hidden">
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
                   <button className="text-midnight-blue">
@@ -128,8 +112,8 @@ export function Header() {
                   </nav>
                 </SheetContent>
               </Sheet>
-          </div>
-      </header>
-    </>
+            </div>
+        </div>
+    </header>
   );
 };

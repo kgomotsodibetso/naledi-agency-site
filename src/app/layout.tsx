@@ -41,12 +41,8 @@ export default function RootLayout({
           fontBody.variable
         )}
       >
-        <div className="flex">
-          <Header />
-          <div className="flex-1 md:pl-64">
-            {children}
-          </div>
-        </div>
+        <Header />
+        {children}
         <Toaster />
       </body>
     </html>
