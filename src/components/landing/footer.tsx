@@ -15,6 +15,7 @@ const footerNavLinks = [
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Blog', href: '/blog' },
     { name: 'Resources', href: '/resources' },
+    { name: 'Persona AI', href: '/persona-generator' },
     { name: 'Contact', href: '/contact' },
     { name: 'Privacy Policy', href: '/privacy-policy' },
     { name: 'Terms of Service', href: '/terms-of-service' },

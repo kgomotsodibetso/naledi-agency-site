@@ -19,7 +19,6 @@ const navLinks = [
     { name: 'Portfolio', page: Page.Portfolio, href: '/portfolio' },
     { name: 'Blog', page: Page.Blog, href: '/blog' },
     { name: 'Resources', page: Page.Resources, href: '/resources' },
-    { name: 'Persona AI', page: Page.PersonaGenerator, href: '/persona-generator' },
 ];
 
 export function Header() {
