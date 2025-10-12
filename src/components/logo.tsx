@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const NalediLogo = () => (
   <Image
-    src="https://firebasestorage.googleapis.com/v0/b/studio-4298127278-2785f.firebasestorage.app/o/Naledi%20Digital%20Logos%2FNaledi%20Digital%20logo.png?alt=media&token=3db8a2f5-e6c2-4d7b-9eae-6fb59a4b3459"
+    src="https://firebasestorage.googleapis.com/v0/b/studio-4298127278-2785f.firebasestorage.app/o/Naledi%20Digital%20Logos%2FNaledi%20Digital%20logo%20(1).png?alt=media&token=24225d3a-1563-44f3-b789-383186a51d8b"
     alt="Naledi Digital Logo"
     width={175}
     height={40}
@@ -12,7 +12,7 @@ const NalediLogo = () => (
   />
 );
 
-export function Logo() {
+export function Logo({ textColor = 'midnight-blue' }: { textColor?: 'white' | 'midnight-blue' }) {
   return (
     <Link href="/" className="flex items-center gap-2">
       <NalediLogo />
