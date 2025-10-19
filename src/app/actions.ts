@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { initializeFirebase } from '@/firebase'; // Use client-safe initialization
+import { initializeFirebase } from '@/firebase/server'; // Use server-safe initialization
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { revalidatePath } from 'next/cache';
 
@@ -17,7 +17,7 @@ export async function submitEnquiry(data: z.infer<typeof enquirySchema>) {
   try {
     const validatedData = enquirySchema.parse(data);
     
-    // In this environment, we use the client-side SDK initialization.
+    // Use the server-side initialization
     const { firestore } = initializeFirebase();
     const leadsCollection = collection(firestore, 'leads');
 
