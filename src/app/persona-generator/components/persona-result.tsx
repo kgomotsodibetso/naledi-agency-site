@@ -27,64 +27,68 @@ function formatText(text: string) {
         });
 }
 
-function stripHtml(html: string): string {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    return doc.body.textContent || "";
-}
-
-function textToHtml(text: string): string {
-    return text.replace(/\*\*(.*?)\*\*/g, '$1')
-        .replace(/### (.*?)\n/g, '$1\n\n')
-        .replace(/## (.*?)\n/g, '$1\n\n')
-        .replace(/\* (.*?)\n/g, '- $1\n');
-}
-
-export function PersonaResult({ result }: PersonaResultProps) {
-  const resultRef = useRef<HTMLDivElement>(null);
-
-  const handleDownloadPdf = () => {
-    const input = resultRef.current;
-    if (!input) return;
+const generatePdf = async (input: HTMLElement | null): Promise<jsPDF | null> => {
+    if (!input) return null;
 
     const buttons = input.querySelector('#result-actions');
     if (buttons) (buttons as HTMLElement).style.display = 'none';
 
-    html2canvas(input, {
+    const canvas = await html2canvas(input, {
         scale: 2,
         useCORS: true,
-        backgroundColor: '#ffffff', // Set a solid white background for the capture
-    }).then((canvas) => {
-      if (buttons) (buttons as HTMLElement).style.display = 'flex';
-      
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({
+        backgroundColor: '#ffffff',
+    });
+
+    if (buttons) (buttons as HTMLElement).style.display = 'flex';
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF({
         orientation: 'p',
         unit: 'px',
         format: [canvas.width, canvas.height],
-      });
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-      pdf.save('naledi-digital-persona-results.pdf');
     });
+    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+    return pdf;
+};
+
+export function PersonaResult({ result }: PersonaResultProps) {
+  const resultRef = useRef<HTMLDivElement>(null);
+
+  const handleDownloadPdf = async () => {
+    const pdf = await generatePdf(resultRef.current);
+    pdf?.save('naledi-digital-persona-results.pdf');
   };
 
-  const handleSendEmail = () => {
+  const handleSendEmail = async () => {
+    const pdf = await generatePdf(resultRef.current);
+    if (!pdf) return;
+
     const subject = encodeURIComponent('Your AI-Generated Client Personas from Naledi Digital');
+    const pdfDataUri = pdf.output('datauristring');
+    
+    // Note: Mailto links have limitations and might not work for large PDFs or all email clients.
     const body = encodeURIComponent(
-        `Here are the client personas and strategies you generated with the Naledi Digital AI tool:\n\n` +
-        `-------------------------------------\n` +
-        `CLIENT PERSONAS\n` +
-        `-------------------------------------\n\n` +
-        `${textToHtml(result.personas)}\n\n` +
-        `-------------------------------------\n` +
-        `SUGGESTED STRATEGIES\n` +
-        `-------------------------------------\n\n` +
-        `${textToHtml(result.suggestedStrategies)}\n\n` +
-        `-------------------------------------\n\n` +
-        `Ready to bring these personas to life?\n` +
-        `Contact Naledi Digital today to discuss your marketing strategy: https://naledi-digital.com/contact`
+        `Hi,\n\nPlease find your AI-generated client personas and marketing strategies attached, courtesy of Naledi Digital.\n\n`+
+        `Ready to bring these personas to life? Contact Naledi Digital today to discuss your marketing strategy: https://naledi-digital.com/contact\n\n` +
+        `Regards,\nThe Naledi Digital Team`
     );
+
+    // This is a bit of a hack to attach a file via mailto. It creates a link and clicks it.
+    // The effectiveness depends on the user's email client and browser.
+    const link = document.createElement('a');
+    link.href = `mailto:?subject=${subject}&body=${body}`;
+    
+    // The attachment part is not standard and might not be supported.
+    // A more robust solution would involve a server-side email service.
+    // For now, we inform the user to attach the downloaded file.
+    
+    alert("Your email client will now open. Please attach the PDF that was just downloaded.");
+    pdf.save('naledi-digital-persona-results-for-email.pdf'); // Prompt download as a fallback.
+    
+    // We can try the mailto link, but the attachment part is unreliable.
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
+
 
   return (
     <div ref={resultRef} className="space-y-8 animate-in fade-in duration-500 p-4 bg-white">
