@@ -26,6 +26,9 @@ const fontHandwriting = Nanum_Pen_Script({
 export const metadata: Metadata = {
   title: 'Naledi Digital - The Home of Brand Builders',
   description: 'We help small businesses, entrepreneurs, and startups build unforgettable brands that shine bright.',
+  icons: {
+    icon: 'https://firebasestorage.googleapis.com/v0/b/studio-4298127278-2785f.firebasestorage.app/o/Naledi%20Digital%20Logos%2FNaledi%20Digital%20logo%20(1).png?alt=media&token=59ee09a1-01c6-4eb1-b025-73134d43ff57',
+  },
 };
 
 export default function RootLayout({
