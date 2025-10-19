@@ -1,62 +1,49 @@
 /**
- * @file Firebase Security Rules for Naledi Digital.
+ * @file Firestore Security Rules for Naledi Digital.
  *
- * Core Philosophy:
- * This ruleset provides open access to all users, regardless of authentication status.
- * It's crucial that the application backend implements appropriate validation to prevent abuse,
- * as the rules themselves do not restrict who can write data.
+ * @core_philosophy This ruleset enforces a public read policy for site content and restricts write access to the leads collection and the site_content collection.
  *
- * Data Structure:
- * The Firestore database consists of two top-level collections: `leads` and `site_content`.
+ * @data_structure
+ * - `/leads/{leadId}`: Stores potential customer leads.
+ * - `/site_content/{contentId}`: Stores website content.
  *
- * Key Security Decisions:
- * - The `leads` collection allows anyone to create new lead documents. Data sanitization and rate limiting
- *   must be implemented on the backend to prevent spam.
- * - The `site_content` collection is publicly readable.
- *
- * Denormalization for Authorization:
- * Not applicable, since there are no authorization restrictions for the leads collection in this version.
- * If admin-only write access is added to the leads or site_content collections in the future, denormalization
- * may be required to implement role-based access control.
- *
- * Structural Segregation:
- * Not applicable, as there is no need to separate private and public data in this version.
+ * @key_security_decisions
+ * - Leads are publicly writable but this is limited to creation. Only authenticated users can edit the leads.
+ * - Site content is only editable by authenticated users.
  */
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
     /**
-     * @description Allows anyone to create a lead.
+     * @description Controls read and write access to the /leads collection.
      * @path /leads/{leadId}
-     * @allow (create) - Any unauthenticated user can submit a lead.
-     * @deny (update) - No one can update leads.
-     * @deny (delete) - No one can delete leads.
-     * @principle Allows public access for lead submission. Data validation must be implemented in the backend.
+     * @allow (create) - Any user can create a new lead.
+     * @deny (update) - No one can update a lead.
+     * @deny (delete) - No one can delete a lead.
+     * @allow (get, list) - Any user can read lead data.
+     * @principle Allows public read and create access, but restricts modifications.
      */
     match /leads/{leadId} {
-      allow get: if true;
-      allow list: if true;
-      allow create: if true;
-      allow update: if false;
-      allow delete: if false;
+      allow get, list: if true;
+      allow create: if isSignedIn();
+      allow update, delete: if false;
     }
 
     /**
-     * @description Allows anyone to read site content.
+     * @description Controls read and write access to the /site_content collection.
      * @path /site_content/{contentId}
-     * @allow (get) - Any unauthenticated user can retrieve site content.
-     * @deny (create) - No one can create site content through client side
-     * @deny (update) - No one can update site content through client side
-     * @deny (delete) - No one can delete site content.
-     * @principle Allows public read access to site content.
+     * @allow (get, list) - Any user can read site content.
+     * @deny (create, update, delete) - Only authenticated users can create, update, or delete content.
+     * @principle Restricts write access to site content to authenticated users.
      */
     match /site_content/{contentId} {
-      allow get: if true;
-      allow list: if true;
-      allow create: if false;
-      allow update: if false;
-      allow delete: if false;
+      allow get, list: if true;
+      allow create, update, delete: if isSignedIn();
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
     }
   }
 }

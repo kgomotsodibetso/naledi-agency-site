@@ -4,7 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
-import { FacebookIcon, InstagramIcon, LinkedInIcon, TwitterIcon } from '@/components/icons';
+import { FacebookIcon, InstagramIcon, LinkedInIcon, TwitterIcon, SpinnerIcon } from '@/components/icons';
+import { subscribeToNewsletter } from '@/app/actions';
 
 const socialLinks = [
   { name: 'Facebook', icon: <FacebookIcon />, url: 'https://facebook.com' },
@@ -57,22 +58,49 @@ const FooterHeader = ({ children }: { children: React.ReactNode }) => (
 );
 
 const NewsletterForm = () => {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [isSuccess, setIsSuccess] = useState(false);
+    const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+    const [message, setMessage] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (email && /\S+@\S+\.\S+/.test(email)) {
-            setIsSuccess(true);
+        setStatus('submitting');
+        setMessage('');
+
+        if (!email || !name) {
+            setMessage('Please enter your name and email.');
+            setStatus('error');
+            return;
+        }
+
+        const result = await subscribeToNewsletter({ name, email });
+        if (result.success) {
+            setStatus('success');
+            setMessage(result.message);
+            setName('');
+            setEmail('');
+        } else {
+            setStatus('error');
+            setMessage(result.message || 'An unexpected error occurred.');
         }
     };
     
-    if (isSuccess) {
-        return <p className="text-slate-200">Thanks for subscribing!</p>;
+    if (status === 'success') {
+        return <p className="text-slate-200">{message}</p>;
     }
 
     return (
-        <form onSubmit={handleSubmit} className="flex gap-2">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+            <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your name"
+                className="flex-grow px-3 py-2 text-sm bg-midnight-blue border border-slate-600 rounded-md text-white placeholder-slate-400 focus:ring-sunrise-yellow focus:border-sunrise-yellow"
+                aria-label="Name for newsletter"
+                required
+            />
             <input
                 type="email"
                 value={email}
@@ -80,10 +108,12 @@ const NewsletterForm = () => {
                 placeholder="Your email"
                 className="flex-grow px-3 py-2 text-sm bg-midnight-blue border border-slate-600 rounded-md text-white placeholder-slate-400 focus:ring-sunrise-yellow focus:border-sunrise-yellow"
                 aria-label="Email for newsletter"
+                required
             />
-            <Button type="submit" size="sm" className="bg-sunrise-yellow text-midnight-blue font-bold rounded-md hover:bg-golden-ochre transition duration-300">
-                Go
+            <Button type="submit" size="sm" className="bg-sunrise-yellow text-midnight-blue font-bold rounded-md hover:bg-golden-ochre transition duration-300" disabled={status === 'submitting'}>
+                {status === 'submitting' ? <SpinnerIcon className="h-4 w-4" /> : 'Go'}
             </Button>
+            {status === 'error' && message && <p className="text-red-400 text-xs mt-1">{message}</p>}
         </form>
     );
 }
