@@ -9,16 +9,34 @@ import { Logo } from '@/components/logo';
 import { MenuIcon, CloseIcon } from '@/components/icons';
 import { Page } from '@/lib/types';
 import { ThemeToggle } from '../theme-toggle';
+import { cn } from '@/lib/utils';
 
 
 const navLinks = [
     { name: 'Home', page: Page.Home, href: '/' },
-    { name: 'About Us', page: Page.About, href: '/about' },
+    { name: 'About', page: Page.About, href: '/about' },
     { name: 'Services', page: Page.Services, href: '/services' },
     { name: 'Portfolio', page: Page.Portfolio, href: '/portfolio' },
     { name: 'Blog', page: Page.Blog, href: '/blog' },
     { name: 'Resources', page: Page.Resources, href: '/resources' },
 ];
+
+const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
+  const pathname = usePathname();
+  const isActive = pathname === href;
+  return (
+    <Link
+      href={href}
+      className={cn(
+        'transition-colors hover:text-accent',
+        isActive ? 'text-accent font-semibold' : 'text-foreground/80'
+      )}
+    >
+      {children}
+    </Link>
+  );
+};
+
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -26,12 +44,32 @@ export function Header() {
 
   return (
     <>
-      <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 shadow-md">
-          <div className="section-container py-4 flex justify-between items-center">
+      <header className="bg-background/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+          <div className="section-container py-3 flex justify-between items-center">
               <Logo />
-              <div className='flex items-center gap-4'>
+
+              {/* Desktop Navigation */}
+              <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+                {navLinks.map((link) => (
+                  <NavLink key={link.name} href={link.href}>
+                    {link.name}
+                  </NavLink>
+                ))}
+              </nav>
+
+              <div className='flex items-center gap-2'>
                 <ThemeToggle />
-                <button onClick={() => setIsOpen(true)} className="text-foreground">
+                
+                {/* Desktop CTA */}
+                <Button asChild size="sm" className="hidden md:flex bg-primary text-primary-foreground font-bold rounded-md">
+                  <Link href="/contact">
+                    Contact Us
+                  </Link>
+                </Button>
+
+                {/* Mobile Menu Button */}
+                <button onClick={() => setIsOpen(true)} className="md:hidden text-foreground p-2">
+                    <span className="sr-only">Open menu</span>
                     <MenuIcon />
                 </button>
               </div>
@@ -40,13 +78,14 @@ export function Header() {
       
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-50 bg-background transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-0 z-50 bg-background transform transition-transform duration-300 ease-in-out md:hidden ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className="flex justify-between items-center p-6 border-b">
           <Logo />
-          <button onClick={() => setIsOpen(false)} className="text-foreground">
+          <button onClick={() => setIsOpen(false)} className="text-foreground p-2">
+            <span className="sr-only">Close menu</span>
             <CloseIcon />
           </button>
         </div>

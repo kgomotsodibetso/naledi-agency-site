@@ -16,7 +16,7 @@ export enum Page {
 
 export interface NavItem {
   label: string;
-  href: Page;
+  href: string;
 }
 
 export interface Service {
