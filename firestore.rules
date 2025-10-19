@@ -1,49 +1,67 @@
 /**
- * @file Firestore Security Rules for Naledi Digital.
+ * @fileoverview Firestore Security Rules for Naledi Digital.
  *
- * @core_philosophy This ruleset enforces a public read policy for site content and restricts write access to the leads collection and the site_content collection.
+ * Core Philosophy:
+ * This ruleset is designed for an application focused on content management and lead capture.
+ * The security model is simple due to the lack of user-specific data or complex authorization needs.
+ * The rules provide public read access where appropriate and restrict write access to specific roles or conditions.
  *
- * @data_structure
- * - `/leads/{leadId}`: Stores potential customer leads.
- * - `/site_content/{contentId}`: Stores website content.
+ * Data Structure:
+ * - /leads/{leadId}: Stores lead data.
+ * - /site_content/{contentId}: Stores website content.
+ * - /newsletter_subscribers/{subscriberId}: Stores newsletter subscribers.
  *
- * @key_security_decisions
- * - Leads are publicly writable but this is limited to creation. Only authenticated users can edit the leads.
- * - Site content is only editable by authenticated users.
+ * Key Security Decisions:
+ * - Public read access is granted for collections like "newsletter_subscribers".
+ * - No user-specific data or roles are defined, simplifying authorization.
+ * - Schema validation is limited to essential fields for authorization purposes.
+ * - Write operations are protected with appropriate conditions to prevent unauthorized modifications.
+ *
+ * Denormalization for Authorization:
+ *  - Not applicable in this version because user-based authorization isn't needed for the collections at root level.
  */
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
     /**
-     * @description Controls read and write access to the /leads collection.
+     * @description Controls access to the /leads collection, which stores potential customer leads.
      * @path /leads/{leadId}
-     * @allow (create) - Any user can create a new lead.
-     * @deny (update) - No one can update a lead.
-     * @deny (delete) - No one can delete a lead.
-     * @allow (get, list) - Any user can read lead data.
-     * @principle Allows public read and create access, but restricts modifications.
+     * @allow (create) - Anyone can create a lead document.
+     * @deny (update, delete) - No one can update or delete a lead document.
+     * @allow (get, list) - Anyone can read a lead document.
+     * @principle Allows public read access and write access for leads submission.
      */
     match /leads/{leadId} {
       allow get, list: if true;
-      allow create: if isSignedIn();
+      allow create: if true;
       allow update, delete: if false;
     }
 
     /**
-     * @description Controls read and write access to the /site_content collection.
+     * @description Controls access to the /site_content collection, which stores website content.
      * @path /site_content/{contentId}
-     * @allow (get, list) - Any user can read site content.
-     * @deny (create, update, delete) - Only authenticated users can create, update, or delete content.
-     * @principle Restricts write access to site content to authenticated users.
+     * @allow (get, list) - Anyone can read site content.
+     * @deny (create, update, delete) - No one can create, update, or delete site content.
+     * @principle Allows public read access but restricts write access.
      */
     match /site_content/{contentId} {
       allow get, list: if true;
-      allow create, update, delete: if isSignedIn();
+      allow create, update, delete: if false;
     }
 
-    function isSignedIn() {
-      return request.auth != null;
+     /**
+      * @description Controls access to the /newsletter_subscribers collection, which stores newsletter subscribers.
+      * @path /newsletter_subscribers/{subscriberId}
+      * @allow (create) - Anyone can subscribe to the newsletter.
+      * @allow (get, list) - Anyone can list/get the data
+      * @deny (update, delete) - No one can update or delete a subscriber entry.
+      * @principle Allows public read and write access for newsletter subscriptions.
+      */
+    match /newsletter_subscribers/{subscriberId} {
+      allow get, list: if true;
+      allow create: if true;
+      allow update, delete: if false;
     }
   }
 }
