@@ -1,6 +1,10 @@
+import { useRef } from 'react';
 import type { GenerateClientPersonasOutput } from '@/ai/flows/generate-client-personas';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, Lightbulb } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Users, Lightbulb, Download, Mail } from 'lucide-react';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 interface PersonaResultProps {
   result: GenerateClientPersonasOutput;
@@ -23,9 +27,80 @@ function formatText(text: string) {
         });
 }
 
+function stripHtml(html: string): string {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+}
+
+function textToHtml(text: string): string {
+    return text.replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/### (.*?)\n/g, '$1\n\n')
+        .replace(/## (.*?)\n/g, '$1\n\n')
+        .replace(/\* (.*?)\n/g, '- $1\n');
+}
+
 export function PersonaResult({ result }: PersonaResultProps) {
+  const resultRef = useRef<HTMLDivElement>(null);
+
+  const handleDownloadPdf = () => {
+    const input = resultRef.current;
+    if (!input) return;
+
+    // Temporarily remove buttons before capturing
+    const buttons = input.querySelector('#result-actions');
+    if (buttons) (buttons as HTMLElement).style.display = 'none';
+
+    html2canvas(input, {
+      scale: 2, // Higher scale for better resolution
+      useCORS: true,
+      backgroundColor: null, // Use element's background
+    }).then((canvas) => {
+      // Restore buttons after capturing
+      if (buttons) (buttons as HTMLElement).style.display = 'flex';
+      
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'p',
+        unit: 'px',
+        format: [canvas.width, canvas.height],
+      });
+      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      pdf.save('naledi-digital-persona-results.pdf');
+    });
+  };
+
+  const handleSendEmail = () => {
+    const subject = encodeURIComponent('Your AI-Generated Client Personas from Naledi Digital');
+    const body = encodeURIComponent(
+        `Here are the client personas and strategies you generated with the Naledi Digital AI tool:\n\n` +
+        `-------------------------------------\n` +
+        `CLIENT PERSONAS\n` +
+        `-------------------------------------\n\n` +
+        `${textToHtml(result.personas)}\n\n` +
+        `-------------------------------------\n` +
+        `SUGGESTED STRATEGIES\n` +
+        `-------------------------------------\n\n` +
+        `${textToHtml(result.suggestedStrategies)}\n\n` +
+        `-------------------------------------\n\n` +
+        `Ready to bring these personas to life?\n` +
+        `Contact Naledi Digital today to discuss your marketing strategy: https://naledi-digital.com/contact`
+    );
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  };
+
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div ref={resultRef} className="space-y-8 animate-in fade-in duration-500">
+      <div id="result-actions" className="flex flex-col sm:flex-row gap-3 p-4 bg-slate-100 rounded-lg border">
+        <Button onClick={handleDownloadPdf} variant="outline" className="w-full sm:w-auto">
+          <Download className="mr-2 h-4 w-4" />
+          Download as PDF
+        </Button>
+        <Button onClick={handleSendEmail} variant="outline" className="w-full sm:w-auto">
+          <Mail className="mr-2 h-4 w-4" />
+          Send to Email
+        </Button>
+      </div>
+
       <Card className="bg-slate-50/50">
         <CardHeader className="flex flex-row items-center gap-4 space-y-0 p-6">
           <Users className="h-8 w-8 text-golden-ochre" />
