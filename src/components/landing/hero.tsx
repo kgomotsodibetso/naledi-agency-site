@@ -1,15 +1,21 @@
 
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import StarsBackground from '@/components/StarsBackground';
 
 export function Hero() {
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <section className="relative h-screen flex flex-col justify-center items-center text-center overflow-hidden">
-      {theme === 'dark' ? (
+      {mounted && theme === 'dark' ? (
         <StarsBackground />
       ) : (
         <video
