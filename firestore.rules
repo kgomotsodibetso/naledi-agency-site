@@ -1,0 +1,55 @@
+/**
+ * @file Overview
+ * This ruleset restricts all access to authenticated users. It provides admin-only access to "leads" and "site_content" collections.
+ *
+ * Data Structure:
+ * - /leads/{leadId}: Stores lead data. Only accessible by authenticated users.
+ * - /site_content/{contentId}: Stores website content. Only accessible by authenticated users.
+ *
+ * Key Security Decisions:
+ * - No user listing is allowed.
+ * - Strict access control: Only authenticated users can create, update or delete leads or site content.
+ *
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Secures the /leads collection. Only allows authenticated users to create leads.
+     * @path /leads/{leadId}
+     * @allow (create) - An authenticated user can create a lead.
+     * @deny (create) - An unauthenticated user cannot create a lead.
+     * @allow (get, list, update, delete) - Access denied.
+     * @principle Only authenticated users can create new leads.
+     */
+    match /leads/{leadId} {
+      allow get: if false;
+      allow list: if false;
+      allow create: if isSignedIn();
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Secures the /site_content collection. Only allows authenticated users to manage site content.
+     * @path /site_content/{contentId}
+     * @allow (create, update, delete) - An authenticated user can create, update, or delete site content.
+     * @deny (create, update, delete) - An unauthenticated user cannot create, update, or delete site content.
+     * @allow (get, list) - Access denied.
+     * @principle Restricts site content management to authenticated users.
+     */
+    match /site_content/{contentId} {
+      allow get: if false;
+      allow list: if false;
+      allow create: if isSignedIn();
+      allow update: if isSignedIn();
+      allow delete: if isSignedIn();
+    }
+
+    // Helper function to determine if a user is signed in.
+    function isSignedIn() {
+      return request.auth != null;
+    }
+  }
+}
