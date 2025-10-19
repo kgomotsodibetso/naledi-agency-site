@@ -46,16 +46,14 @@ export function PersonaResult({ result }: PersonaResultProps) {
     const input = resultRef.current;
     if (!input) return;
 
-    // Temporarily remove buttons before capturing
     const buttons = input.querySelector('#result-actions');
     if (buttons) (buttons as HTMLElement).style.display = 'none';
 
     html2canvas(input, {
-      scale: 2, // Higher scale for better resolution
-      useCORS: true,
-      backgroundColor: null, // Use element's background
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff', // Set a solid white background for the capture
     }).then((canvas) => {
-      // Restore buttons after capturing
       if (buttons) (buttons as HTMLElement).style.display = 'flex';
       
       const imgData = canvas.toDataURL('image/png');
@@ -89,7 +87,7 @@ export function PersonaResult({ result }: PersonaResultProps) {
   };
 
   return (
-    <div ref={resultRef} className="space-y-8 animate-in fade-in duration-500">
+    <div ref={resultRef} className="space-y-8 animate-in fade-in duration-500 p-4 bg-white">
       <div id="result-actions" className="flex flex-col sm:flex-row gap-3 p-4 bg-slate-100 rounded-lg border">
         <Button onClick={handleDownloadPdf} variant="outline" className="w-full sm:w-auto">
           <Download className="mr-2 h-4 w-4" />
