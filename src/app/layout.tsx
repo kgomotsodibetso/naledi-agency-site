@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { DM_Sans, Nanum_Pen_Script, Inter } from 'next/font/google';
 import { Header } from '@/components/landing/header';
 import { ThemeProvider } from '@/components/theme-provider';
+import { FirebaseClientProvider } from '@/firebase/client-provider';
 import './globals.css';
 
 const fontSans = DM_Sans({
@@ -52,9 +53,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          {children}
-          <Toaster />
+          <FirebaseClientProvider>
+            <Header />
+            {children}
+            <Toaster />
+          </FirebaseClientProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -1,5 +1,40 @@
 {
-  "entities": {},
+  "entities": {
+    "lead": {
+      "title": "Lead",
+      "description": "A potential customer lead.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The full name of the lead."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The email address of the lead."
+        },
+        "company": {
+          "type": "string",
+          "description": "The company the lead works for."
+        },
+        "service": {
+          "type": "string",
+          "description": "The service the lead is interested in."
+        },
+        "message": {
+          "type": "string",
+          "description": "The message from the lead."
+        },
+        "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp when the lead was created."
+        }
+      },
+      "required": ["name", "email", "message", "createdAt"]
+    }
+  },
   "auth": {
     "providers": [
       "password",
