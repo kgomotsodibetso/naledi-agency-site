@@ -1,10 +1,9 @@
 'use server';
 
 import { z } from 'zod';
-import { initializeFirebase } from '@/firebase';
-import { collection, serverTimestamp } from 'firebase/firestore';
+import { initializeFirebase } from '@/firebase/server'; // Use server-safe initialization
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { revalidatePath } from 'next/cache';
-import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
 const enquirySchema = z.object({
   name: z.string().min(1, 'Name is required.'),
@@ -18,13 +17,11 @@ export async function submitEnquiry(data: z.infer<typeof enquirySchema>) {
   try {
     const validatedData = enquirySchema.parse(data);
     
-    // NOTE: This runs on the server, but in a Next.js Action context
-    // that requires the client SDK to be initialized.
     const { firestore } = initializeFirebase();
     const leadsCollection = collection(firestore, 'leads');
 
-    // Using the non-blocking function to handle the submission
-    addDocumentNonBlocking(leadsCollection, {
+    // Use a standard 'addDoc' here as we are in a server environment.
+    await addDoc(leadsCollection, {
       ...validatedData,
       createdAt: serverTimestamp(),
     });
