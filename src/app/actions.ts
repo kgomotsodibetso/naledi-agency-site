@@ -1,9 +1,10 @@
 'use server';
 
 import { z } from 'zod';
-import { initializeFirebase, addDocumentNonBlocking } from '@/firebase';
+import { initializeFirebase } from '@/firebase';
 import { collection, serverTimestamp } from 'firebase/firestore';
 import { revalidatePath } from 'next/cache';
+import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
 const enquirySchema = z.object({
   name: z.string().min(1, 'Name is required.'),
