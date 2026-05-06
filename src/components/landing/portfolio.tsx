@@ -1,3 +1,4 @@
+
 'use client';
 import React from 'react';
 import Link from 'next/link';
@@ -11,6 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
+import { FadeIn, HoverCard } from '@/components/animations';
 
 const ContentCardSkeleton = () => (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -24,7 +26,6 @@ const ContentCardSkeleton = () => (
     </div>
 );
 
-
 export function Portfolio() {
   const [isLoading, setIsLoading] = React.useState(true);
   const plugin = React.useRef(
@@ -37,7 +38,7 @@ export function Portfolio() {
   }, []);
 
   return (
-    <section id="portfolio" className="py-20 bg-slate-50">
+    <FadeIn className="py-20 bg-slate-50" id="portfolio">
         <div className="section-container">
             <div className="text-center mb-12">
                 <h2 className="section-title">Our Work in the Wild</h2>
@@ -61,7 +62,7 @@ export function Portfolio() {
                   <CarouselContent className="-ml-4">
                       {portfolioItems.map((study) => (
                           <CarouselItem key={study.id} className="md:basis-1/2 lg:basis-1/3 pl-4">
-                              <div className="bg-white rounded-lg shadow-lg overflow-hidden group h-full flex flex-col">
+                              <HoverCard className="bg-white rounded-lg shadow-lg overflow-hidden group h-full flex flex-col">
                                   <div className="relative">
                                       <Image src={study.imageUrl} alt={study.client} width={800} height={600} className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
                                       <div className="absolute inset-0 bg-black bg-opacity-20"></div>
@@ -71,7 +72,7 @@ export function Portfolio() {
                                       <h3 className="text-2xl font-sans font-bold text-midnight-blue mt-1 mb-3">{study.client}</h3>
                                       <p className="text-slate-600 font-body flex-grow">{study.description}</p>
                                   </div>
-                              </div>
+                              </HoverCard>
                           </CarouselItem>
                       ))}
                   </CarouselContent>
@@ -85,6 +86,6 @@ export function Portfolio() {
                 </Link>
             </div>
         </div>
-    </section>
+    </FadeIn>
   );
 }
