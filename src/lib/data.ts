@@ -79,7 +79,7 @@ export const servicesData: Service[] = [
 export const portfolioItems: PortfolioItem[] = [
     { id: 'cs-1', client: 'Neno Ferreira', title: 'Crafting a Bold Brand Voice', services: 'Brand Strategy, Social Media', imageUrl: 'https://images.unsplash.com/photo-1550684848-8675526022a1?auto=format&fit=crop&q=80&w=800&h=600', description: 'We developed a comprehensive brand strategy and social media plan for Neno Ferreira, resulting in a 200% increase in engagement and a defined, powerful online presence.'},
     { id: 'cs-2', client: 'Tshiamiso Astronauts', title: 'Launching a Galactic Brand', services: 'Branding & Communications', imageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800&h=600', description: 'For Tshiamiso Astronauts, we created a full branding suite and communications strategy, successfully launching their mission to inspire the next generation of space explorers.'},
-    { id: 'cs-3', client: 'Future Client', title: 'Your Success Story Here', services: 'Your Custom Solution', imageUrl: 'https://images.unsplash.com/photo-1460925895917-afbe65cebe6e?auto=format&fit=crop&q=80&w=800&h=600', description: 'Your business could be our next big success story. Let\\'s work together to build something amazing and showcase your growth.'},
+    { id: 'cs-3', client: 'Future Client', title: 'Your Success Story Here', services: 'Your Custom Solution', imageUrl: 'https://images.unsplash.com/photo-1460925895917-afbe65cebe6e?auto=format&fit=crop&q=80&w=800&h=600', description: 'Your business could be our next big success story. Let\'s work together to build something amazing and showcase your growth.'},
 ];
 
 export const testimonialsData: Testimonial[] = [
@@ -101,7 +101,7 @@ export const blogPostsData: BlogPost[] = [
     {
         id: 'blog-2',
         title: 'The Art of Vibe Coding: Is Your Website Speaking Your Language?',
-        excerpt: 'Your website is more than just code; it\\'s your digital storefront. We explore how to infuse your brand\\'s personality into every pixel.',
+        excerpt: 'Your website is more than just code; it\'s your digital storefront. We explore how to infuse your brand\'s personality into every pixel.',
         imageUrl: 'https://images.unsplash.com/photo-1558655146-ef6f5682d27d?auto=format&fit=crop&q=80&w=800&h=600',
         author: 'Naledi Digital',
         date: 'October 15, 2023',
