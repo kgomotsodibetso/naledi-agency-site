@@ -1,3 +1,4 @@
+'use client';
 
 import { Hero } from '@/components/landing/hero';
 import { Services } from '@/components/landing/services';
